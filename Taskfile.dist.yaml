@@ -1,0 +1,32 @@
+version: 3
+
+vars:
+  TFPLAN: .tfplan
+dotenv:
+  - .env
+tasks:
+  init:
+    desc: Initialize the tofu project (run this after freshly checking out the repo)
+    cmds:
+      - tofu init
+  plan:
+    desc: Create a plan file to be later used by task k0s:apply
+    cmds:
+      - tofu plan -out={{.TFPLAN}}
+  apply:
+    desc: Apply the tofu configuration (i.e. create the required infrastructure in the cloud provider)
+    cmds:
+      - tofu apply {{.TFPLAN}}
+  destroy:
+    desc: Destroy all tofu resources (i.e. destroy the required infrastructure in the cloud provider)
+    cmds:
+      - tofu destroy
+  keygen:
+    desc: Generates an ssh keypair for the nodes
+    cmds:
+      - mkdir .ssh
+      - ssh-keygen -P "" -f .ssh/key
+  output:
+    cmds:
+      - tofu refresh
+      - tofu output --raw k0sctl

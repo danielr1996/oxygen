@@ -1,0 +1,5 @@
+.env
+.tfplan
+.task
+.terraform
+.ssh
