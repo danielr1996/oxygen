@@ -1,0 +1,28 @@
+version: 3
+
+includes:
+  tofu:
+    taskfile: Taskfile.tofu.yaml
+    aliases: ["tofu"]
+  k0s:
+    taskfile: Taskfile.k0s.yaml
+    aliases: ["k0s"]
+tasks:
+  keygen:
+    desc: Generates an ssh keypair for the nodes
+    cmds:
+      - mkdir .ssh
+      - ssh-keygen -P "" -f .ssh/key
+  apply:
+    desc: "Create the cluster from scratch"
+    cmds:
+      - task: tofu:init
+      - task: tofu:plan
+      - task: tofu:apply
+      - task: k0s:apply
+      - task: k0s:kubeconfig
+  destroy:
+    desc: "Destroy the cluster"
+    cmds:
+      - task: k0s:reset
+      - task: tofu:destroy

@@ -4,4 +4,5 @@ resource "hcloud_ssh_key" "default" {
 }
 
 provider "hcloud" {
+  token = var.hcloud.token
 }
