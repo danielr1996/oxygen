@@ -7,3 +7,4 @@ vars.auto.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 .idea/
+hack/

@@ -5,6 +5,7 @@ output "nodes" {
       address = node.ipv4_address,
       user    = "root",
       port    = 22,
+      sshkey = "../.ssh/key"
     }
   ]
 }
@@ -23,15 +24,11 @@ variable "server_type" {
 variable "location" {
   type = string
 }
-variable "image" {
-  type = string
-}
 variable "role" {
   type = string
 }
 
-variable "ssh_key" {
-
+variable "sshkey" {
 }
 
 resource "hcloud_server" "nodegroup" {
@@ -39,9 +36,11 @@ resource "hcloud_server" "nodegroup" {
   name        = "${var.role}-${var.name}-${count.index}"
   server_type = var.server_type
   location    = var.location
-  image       = var.image
-  ssh_keys    = [var.ssh_key]
+  image       = "ubuntu-24.04"
+  ssh_keys    = [var.sshkey]
 }
+
+
 
 resource "terraform_data" "updatehostkeys" {
   provisioner "local-exec" {
@@ -54,5 +53,14 @@ resource "terraform_data" "updatehostkeys" {
       exit 0
     EOF
     interpreter = ["bash", "-c"]
+  }
+}
+
+terraform {
+  required_providers {
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "1.48.1"
+    }
   }
 }

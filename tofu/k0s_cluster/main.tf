@@ -3,15 +3,14 @@ variable "nodes" {
     role    = string
     address = string
     user    = string
-    port    = number,
+    port    = number
+    sshkey = string
   }))
 }
 
 variable "name" {
   type = string
 }
-
-variable "sshkey" {}
 
 variable "extensions" {}
 
@@ -31,7 +30,7 @@ output "k0sctl" {
             address = node.address,
             user    = node.user,
             port    = node.port,
-            keyPath = var.sshkey,
+            keyPath = node.sshkey,
           }
         }
         ],

@@ -2,7 +2,7 @@ version: 3
 
 includes:
   tofu:
-    taskfile: Taskfile.tofu.yaml
+    taskfile: tofu
     aliases: ["tofu"]
   k0s:
     taskfile: Taskfile.k0s.yaml

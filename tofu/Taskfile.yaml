@@ -1,25 +1,30 @@
 version: 3
 
 vars:
-  TFPLAN: .tfplan
+  TFPLAN: ../.tfplan
 tasks:
   init:
+    dir: tofu
     desc: Initialize the tofu project (run this after freshly checking out the repo)
     cmds:
       - tofu init
   plan:
+    dir: tofu
     desc: Create a plan file to be later used by task k0s:apply
     cmds:
       - tofu plan -out={{.TFPLAN}}
   apply:
+    dir: tofu
     desc: Apply the tofu configuration (i.e. create the required infrastructure in the cloud provider)
     cmds:
       - tofu apply {{.TFPLAN}}
   destroy:
+    dir: tofu
     desc: Destroy all tofu resources (i.e. destroy the required infrastructure in the cloud provider)
     cmds:
       - tofu destroy --auto-approve
   output:
+    dir: tofu
     cmds:
       - tofu refresh
       - tofu output --raw k0sctl
