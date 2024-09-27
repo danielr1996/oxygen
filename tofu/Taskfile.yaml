@@ -28,3 +28,8 @@ tasks:
     cmds:
       - tofu refresh
       - tofu output --raw k0sctl
+  clean:
+    dir: tofu
+    cmds:
+      - rm terraform.tfstate
+      - rm terraform.tfstate.backup

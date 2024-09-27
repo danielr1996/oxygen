@@ -6,28 +6,8 @@ resource "hcloud_ssh_key" "default" {
 module "controller" {
   source = "./hetzner_nodegroup"
   location = "nbg1"
-  role = "controller"
-  server_type = "cax11"
-  size = 1
-  sshkey = hcloud_ssh_key.default.id
-}
-
-module "worker-sm" {
-  source = "./hetzner_nodegroup"
-  location = "nbg1"
-  name = "sm"
-  role = "worker"
-  server_type = "cax11"
-  size = 1
-  sshkey = hcloud_ssh_key.default.id
-}
-
-module "worker-lg" {
-  source = "./hetzner_nodegroup"
-  location = "nbg1"
-  name = "lg"
-  role = "worker"
-  server_type = "cax31"
+  role = "single"
+  server_type = "cax21"
   size = 1
   sshkey = hcloud_ssh_key.default.id
 }
@@ -38,8 +18,6 @@ module "cluster" {
   name   = "oxygen"
   nodes  = concat(
     module.controller.nodes,
-    module.worker-lg.nodes,
-    module.worker-sm.nodes
   )
   extensions = local.hetzner_extensions
 }
