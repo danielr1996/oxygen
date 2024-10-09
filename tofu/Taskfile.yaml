@@ -27,7 +27,9 @@ tasks:
     dir: tofu
     cmds:
       - tofu refresh
-      - tofu output --raw k0sctl
+      - tofu output --raw k0sctl > ../k0s/k0sctl.yaml
+      - tofu output --raw sshkey > ../k0s/default
+      - chmod 600 ../k0s/default
   clean:
     dir: tofu
     cmds:

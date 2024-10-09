@@ -2,18 +2,18 @@ version: 3
 
 tasks:
   apply:
-    dir: tofu
+    dir: k0s
     desc: Apply the k0s configuration to the cluster (i.e create or update the cluster)
     cmds:
-      - tofu output --raw k0sctl | k0sctl apply -config -
+     - k0sctl apply
   kubeconfig:
-    dir: tofu
+    dir: k0s
     desc: Save the kubeconfig to ~/.kube/
     cmds:
       # TODO: make templateable
-      - tofu output --raw k0sctl | k0sctl kubeconfig -config - > $KUBECONFIG
+      - k0sctl kubeconfig > $KUBECONFIG
   reset:
-    dir: tofu
+    dir: k0s
     desc: Reset the k0s cluster (e.g. reset nodes to factory settings but don't delete them)
     cmds:
-      - tofu output --raw k0sctl | k0sctl reset  --force -config -
+      - k0sctl reset  --force
